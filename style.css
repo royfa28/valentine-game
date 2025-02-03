@@ -1,0 +1,46 @@
+/* General Styles */
+body {
+    background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrollbars */
+}
+
+.container {
+    max-width: 90vw; /* Dynamic width based on screen size */
+    max-height: 80vh; /* Dynamic height based on screen size */
+    background-color: rgba(255, 105, 180, 0.5); /* Pink semi-transparent background */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative; /* Ensure absolute positioning works for child elements */
+}
+
+.valentine-text {
+    color: #ff1493; /* Deep pink color */
+    font-weight: bold;
+}
+
+.bear-container img {
+    max-width: 100%;
+    height: auto;
+    animation: float 3s infinite ease-in-out;
+}
+
+.custom-btn {
+    width: 100px; /* Fixed width for buttons */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Floating Animation for Teddy Bear */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
