@@ -1,49 +1,46 @@
-const noButton = document.getElementById('noButton');
+import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+
 const yesButton = document.getElementById('yesButton');
-const result = document.getElementById('result');
+const noButton = document.getElementById('noButton');
+const imageDisplay = document.getElementById('imageDisplay');
+const valentineQuestion = document.getElementById('valentineQuestion');
+const responseButtons = document.getElementById('responseButtons');
 
-let moveDistance = 20;
+let noClickCount = 0;
+let buttonHeight = 48; // Starting height in pixels
+let buttonWidth = 80;
+let fontSize = 20; // Starting font size in pixels
+const imagePaths = [
+  "./images/image1.gif",
+  "./images/image2.gif",
+  "./images/image3.gif",
+  "./images/image4.gif",
+  "./images/image5.gif",
+  "./images/image6.gif",
+  "./images/image7.gif"
+];
 
-// Set boundaries for the "No" button
-function getBoundaries() {
-    return {
-        top: 0,
-        bottom: window.innerHeight - noButton.offsetHeight,
-        left: 0,
-        right: window.innerWidth - noButton.offsetWidth
-    };
-}
-
-noButton.addEventListener('click', () => {
-    moveNoButton();
+// Add event listener for "No" button
+noButton.addEventListener('click', function () {
+  if (noClickCount < 5) {
+    noClickCount++;
+    imageDisplay.src = imagePaths[noClickCount];
+    buttonHeight += 35; // Increase height by 35px on each click
+    buttonWidth += 35; // Increase width by 35px on each click
+    fontSize += 25; // Increase font size by 25px on each click
+    yesButton.style.height = `${buttonHeight}px`; // Update button height
+    yesButton.style.width = `${buttonWidth}px`; // Update button width
+    yesButton.style.fontSize = `${fontSize}px`; // Update font size
+    if (noClickCount < 6) {
+      noButton.textContent = ["No", "Are you sure?", "Pookie please", "Don't do this to me :(", "You're breaking my heart", "I'm gonna cry..."][noClickCount];
+    }
+  }
 });
 
+// Add event listener for "Yes" button
 yesButton.addEventListener('click', () => {
-    result.textContent = "Yay! I'm so happy! ❤️";
-    result.style.color = "#ff1493"; // Deep pink color
-    noButton.style.display = 'none';
-    yesButton.style.display = 'none';
+  imageDisplay.src = './images/image7.gif'; // Change to image7.gif
+  valentineQuestion.textContent = "Yayyy!! :3"; // Change the question text
+  responseButtons.style.display = 'none'; // Hide both buttons
+  confetti(); // Trigger confetti animation
 });
-
-function moveNoButton() {
-    const boundary = getBoundaries();
-
-    const randomX = (Math.random() - 0.5) * moveDistance * 2; // More randomness
-    const randomY = (Math.random() - 0.5) * moveDistance * 2;
-
-    let newLeft = noButton.offsetLeft + randomX;
-    let newTop = noButton.offsetTop + randomY;
-
-    // Enforce hard boundaries using the button's edges
-    if (newLeft < boundary.left) newLeft = boundary.left;
-    if (newTop < boundary.top) newTop = boundary.top;
-    if (newLeft + noButton.offsetWidth > boundary.right) newLeft = boundary.right - noButton.offsetWidth;
-    if (newTop + noButton.offsetHeight > boundary.bottom) newTop = boundary.bottom - noButton.offsetHeight;
-
-    noButton.style.position = 'absolute';
-    noButton.style.left = `${newLeft}px`;
-    noButton.style.top = `${newTop}px`;
-
-    // Increase the distance for next time
-    moveDistance += 5;
-}
